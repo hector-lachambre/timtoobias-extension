@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>HuxLive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+</head>
+
+<body class="application">
+    <div class="loader js-loader">
+        <div class="cssload-loader-inner">
+            <div class="cssload-cssload-loader-line-wrap-wrap">
+                <div class="cssload-loader-line-wrap"></div>
+            </div>
+            <div class="cssload-cssload-loader-line-wrap-wrap">
+                <div class="cssload-loader-line-wrap"></div>
+            </div>
+            <div class="cssload-cssload-loader-line-wrap-wrap">
+                <div class="cssload-loader-line-wrap"></div>
+            </div>
+            <div class="cssload-cssload-loader-line-wrap-wrap">
+                <div class="cssload-loader-line-wrap"></div>
+            </div>
+            <div class="cssload-cssload-loader-line-wrap-wrap">
+                <div class="cssload-loader-line-wrap"></div>
+            </div>
+            
+        </div>
+        
+        <div class="loader-info">Initialisation en cours</div>
+    </div>
+
+    <div class="js-main flex-column visually-hidden">
+        <a target="_blank" href="https://www.twitch.tv/huztim">
+            <div class="header js-header">
+                <div class="header__main">
+                    <span class="header__title js-header__title">Retrouvez moi prochainement en stream !
+                    </span>
+                    <span class="header__moment js-header__moment"></span>
+                </div>
+                <aside class="header__aside">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 288 288"
+                        xml:space="preserve" class="header__logo">
+                        <path class="st0" d="M25.8,0L6.4,49.4v202h68.8V288h38.7l36.5-36.5h55.9l75.2-75.2V0H25.8z M255.8,163.3l-43,43H144l-36.5,36.5
+                    v-36.5h-58V25.8h206.3V163.3z M212.8,75.2v75.1H187V75.2H212.8z M144,75.2v75.1h-25.8V75.2H144z" />
+                    </svg>
+
+                </aside>
+            </div>
+        </a>
+
+        <div class="notifications">
+            <div class="notifications__category-title">Notifications</div>
+            <div class="notifications__item">
+                <div class="notifications__label">Youtube</div>
+                <input type="checkbox" id="notifications-youtube" name="notification-youtube" class="notifications__toggle-switch js-notifications__toggle-switch">
+                <label for="notifications-youtube"></label>
+            </div>
+            <div class="notifications__item">
+                <div class="notifications__label">Twitch</div>
+                <input type="checkbox" id="notifications-twitch" name="notification-twitch" class="notifications__toggle-switch js-notifications__toggle-switch">
+                <label for="notifications-twitch"></label>
+            </div>
+        </div>
+        <div class="separator"></div>
+        <div class="videos">
+
+            <div class="videos__category-title">Dernières vidéos</div>
+            <div class="videos__row js-videos__row">
+                <a target="_blank" href="javascript:void()" class="js-videos__link">
+                    <img src="./images/91x51.png" class="videos__thumbnail js-videos__thumbnail" alt="Miniature de vidéos">
+                </a>
+                <div class="videos__content">
+                    <a target="_blank" href="javascript:void()" class="videos__title js-videos__title js-videos__link"></a>
+                    <div class="videos__description js-videos__description"></div>
+                    <div class="videos__moment js-videos__moment"></div>
+                </div>
+            </div>
+            <div class="videos__row js-videos__row">
+                <a target="_blank" href="javascript:void()" class="js-videos__link">
+                    <img src="./images/91x51.png" class="videos__thumbnail js-videos__thumbnail" alt="Miniature de vidéos">
+                </a>
+                <div class="videos__content">
+                    <a target="_blank" href="javascript:void()" class="videos__title js-videos__title js-videos__link"></a>
+                    <div class="videos__description js-videos__description"></div>
+                    <div class="videos__moment js-videos__moment"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="moment-with-locales.js"></script>
+    <script src="popup.js"></script>
+</body>
+
+</html>
