@@ -10,6 +10,7 @@ You have to remove the *applications* key => value pair.
 For example, move :
 
 *manifest.json*
+```
     {
         "name": "HuzLive",
         "version": "0.4.1",
@@ -41,10 +42,12 @@ For example, move :
         },
         "manifest_version": 2
     }
+```
 
 to :
 
 *manifest.json*
+```
     {
         "name": "HuzLive",
         "version": "0.4.1",
@@ -70,3 +73,4 @@ to :
         },
         "manifest_version": 2
     }
+```
