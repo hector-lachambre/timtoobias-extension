@@ -171,12 +171,16 @@ a {
     flex-direction: row;
     align-items: center;
     padding: 0 15px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.videos__link {
+    display: flex;
 }
 
 .videos__thumbnail {
-    width: 91px;
-    height: 51px;
+    width: 102px;
+    height: 57px;
 }
 
 .videos__content {
