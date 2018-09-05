@@ -1,6 +1,6 @@
 {
     "name": "HuzLive",
-    "version": "0.2.1",
+    "version": "0.4.0",
     "description": "Soyez toujours au courant des lives & vidéos de votre streameur Dofus préféré",
     "permissions": ["https://api.twitch.tv/*", "https://www.googleapis.com/*", "activeTab", "notifications", "storage"],
     "background": {
@@ -23,7 +23,7 @@
     },
     "applications": {
         "gecko": {
-          "id": "{4550a148-e94a-4fb8-8c32-5d7a9ff8023f}",
+          "id": "{b8e90417-1550-474f-bd6e-de91b8382298}",
           "strict_min_version": "42.0"
         }
       },
