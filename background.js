@@ -1,6 +1,6 @@
 "use strict";
 
-import { HuzLive } from './HuzLive.js';
+import { Application } from './Application.js';
 
 const settings = {
     settings: {
@@ -18,16 +18,16 @@ chrome.runtime.onInstalled.addListener(function () {
 });
 
 
-const huzLive = new HuzLive();
+const application = new Application();
 
-huzLive
+application
     .updateYoutubeDatas()
     .updateTwitchDatas();
 
 setInterval(
     () => {
 
-        huzLive
+        application
             .updateYoutubeDatas()
             .updateTwitchDatas();
     },
