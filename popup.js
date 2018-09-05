@@ -13,7 +13,7 @@ function render() {
     application.addEventListener('datasReady', () => {
 
         var loader = document.querySelector('.js-loader');
-        var main = document.querySelector('.js-main');
+        var main   = document.querySelector('.js-main');
 
         loader.classList.add('hidden');
         main.classList.remove('visually-hidden');
@@ -39,13 +39,13 @@ function render() {
                 var videosDescriptions = element.querySelector('.js-videos__description');
                 var videosMoment       = element.querySelector('.js-videos__moment');
 
-                videosThumbnail.src          = result.videos[index].thumbnail;
-                videosTitles.innerHTML       = result.videos[index].title;
-                videosDescriptions.innerHTML = result.videos[index].description
-                videosMoment.innerHTML       = `Publiée ${moment(result.videos[index].date).fromNow()}`;
+                videosThumbnail.src          = Sanitizer.escapeHTML(result.videos[index].thumbnail);
+                videosTitles.innerHTML       = Sanitizer.escapeHTML(result.videos[index].title);
+                videosDescriptions.innerHTML = Sanitizer.escapeHTML(result.videos[index].description);
+                videosMoment.innerHTML       = Sanitizer.escapeHTML(`Publiée ${moment(result.videos[index].date).fromNow()}`);
 
                 videosLink.forEach((element) => {
-                    element.href = `https://www.youtube.com/watch?v=${result.videos[index].id}`;
+                    element.href = Sanitizer.escapeHTML(`https://www.youtube.com/watch?v=${result.videos[index].id}`);
                 });
             });
         }
@@ -60,8 +60,8 @@ function render() {
         if (result.live !== null && result.live !== undefined) {
 
             header.classList.add('header--online')
-            headerTitle.innerHTML  = result.live.title;
-            headerMoment.innerHTML = moment(result.live.date).fromNow();
+            headerTitle.innerHTML  = Sanitizer.escapeHTML(result.live.title);
+            headerMoment.innerHTML = Sanitizer.escapeHTML(moment(result.live.date).fromNow());
         }
     });
 
