@@ -1,0 +1,6 @@
+/* == Separator == */
+
+.separator {
+    height: 2px;
+    background-image: linear-gradient(to right, #ffaa2b, #9b31f8)
+}

@@ -1,0 +1,60 @@
+/* == Videos Component == */
+
+.videos {
+    display: flex;
+    flex-direction: column;
+}
+
+.videos__category-title {
+    font-size: 16px;
+    line-height: 24px;
+    padding: 10px 15px;
+}
+
+.videos__row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 15px;
+    margin-bottom: 10px;
+}
+
+.videos__link {
+    display: flex;
+}
+
+.videos__thumbnail {
+    width: 102px;
+    height: 57px;
+}
+
+.videos__content {
+    flex: 1 1 auto;
+    padding-left: 15px;
+    overflow: hidden;
+}
+
+.videos__title,
+.videos__description,
+.videos__moment {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.videos__title {
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.videos__description {
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.videos__moment {
+    font-size: 12px;
+    line-height: 18px;
+    opacity: 0.8;
+}
