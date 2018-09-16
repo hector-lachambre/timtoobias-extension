@@ -25,11 +25,11 @@ application
     .updateTwitchDatas();
 
 setInterval(
-    () => {
+    () => { application.updateYoutubeDatas() },
+    10 * 60 * 1000
+)
 
-        application
-            .updateYoutubeDatas()
-            .updateTwitchDatas();
-    },
-    30000
+setInterval(
+    () => { application.updateTwitchDatas() },
+    30 * 1000
 )

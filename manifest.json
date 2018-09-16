@@ -1,6 +1,6 @@
 {
     "name": "HuzLive",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "description": "Soyez toujours au courant des lives & vidéos de votre streameur Dofus préféré",
     "permissions": ["https://api.twitch.tv/*", "https://www.googleapis.com/*", "activeTab", "notifications", "storage"],
     "background": {
