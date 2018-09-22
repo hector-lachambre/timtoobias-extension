@@ -27,9 +27,11 @@ function render() {
 
         application.dispatchEvent(datasReadyEvent);
 
-        if (result.videos.length > 0) {
+        if (Object.keys(result).length > 0) {
 
             var videosRow = document.querySelectorAll('.js-videos__row');
+
+            var keys = Object.keys(result.videos);
 
             videosRow.forEach((element, index) => {
 
@@ -39,13 +41,13 @@ function render() {
                 var videosDescriptions = element.querySelector('.js-videos__description');
                 var videosMoment       = element.querySelector('.js-videos__moment');
 
-                videosThumbnail.src          = Sanitizer.escapeHTML(result.videos[index].thumbnail);
-                videosTitles.innerHTML       = Sanitizer.escapeHTML(result.videos[index].title);
-                videosDescriptions.innerHTML = Sanitizer.escapeHTML(result.videos[index].description);
-                videosMoment.innerHTML       = Sanitizer.escapeHTML(`Publiée ${moment(result.videos[index].date).fromNow()}`);
+                videosThumbnail.src          = Sanitizer.escapeHTML(result.videos[keys[index]].thumbnail);
+                videosTitles.innerHTML       = Sanitizer.escapeHTML(result.videos[keys[index]].title);
+                videosDescriptions.innerHTML = Sanitizer.escapeHTML(result.videos[keys[index]].description);
+                videosMoment.innerHTML       = Sanitizer.escapeHTML(`Publiée ${moment(result.videos[keys[index]].date).fromNow()}`);
 
                 videosLink.forEach((element) => {
-                    element.href = Sanitizer.escapeHTML(`https://www.youtube.com/watch?v=${result.videos[index].id}`);
+                    element.href = Sanitizer.escapeHTML(`https://www.youtube.com/watch?v=${result.videos[keys[index]].id}`);
                 });
             });
         }

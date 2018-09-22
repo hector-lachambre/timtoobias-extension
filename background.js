@@ -20,16 +20,9 @@ chrome.runtime.onInstalled.addListener(function () {
 
 const application = new Application();
 
-application
-    .updateYoutubeDatas()
-    .updateTwitchDatas();
+application.updateDatas()
 
 setInterval(
-    () => { application.updateYoutubeDatas() },
-    10 * 60 * 1000
-)
-
-setInterval(
-    () => { application.updateTwitchDatas() },
+    () => { application.updateDatas() },
     30 * 1000
 )

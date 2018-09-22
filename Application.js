@@ -1,15 +1,5 @@
 import { NotificationManager } from './vendor/NotificationManager.js';
 
-const YT_UserId = 'UCwwTPrN3XUFEGzCb6XuVniQ';
-const YT_key = 'AIzaSyDEyfIk3335BGClFHmHDcSKXxDzYOHitlg';
-
-const Twitch_UserId = '42428057';
-
-// Meristo ID
-/* const Twitch_UserId = '39381860'; */
-const Twitch_key = '7m3kxyorkss6bg4fzgz1pyueuhcjyb';
-
-
 /**
  * @module Application
  */
@@ -25,7 +15,7 @@ export class Application {
        * @private
        */
       this._datas = {
-          videos: [],
+          videos: null,
           live: null
       }
 
@@ -56,186 +46,167 @@ export class Application {
 
 
     /**
-     * Obtientla promesse de donnée Youtube
+     * Obtientla promesse de données 
      * 
-     * @method _getYoutubeDatasPromise
+     * @method _getDatasPromise
      * @returns {Promise}
      * @private
      */
-    _getYoutubeDatasPromise() {
-
-        return fetch(
-            `https://www.googleapis.com/youtube/v3/search?key=${YT_key}&channelId=${YT_UserId}&part=snippet,id&order=date&maxResults=2`
-        )
-    };
-
-
-    /**
-     * Obtientla promesse de donnée Youtube
-     * 
-     * @method _getTwitchDatasPromise
-     * @returns {Promise}
-     * @private
-     */
-    _getTwitchDatasPromise() {
-
-        const headers = new Headers({
-            'Client-ID': Twitch_key
-        });
+    _getDatasPromise() {
         
         return fetch(
-            `https://api.twitch.tv/helix/streams?user_id=${Twitch_UserId}`, 
-            { headers: headers }
+            'https://api.hectorlachambre.pro/huzlive'
         )
     }
 
     /**
      * Met à jour les données provenant de Youtube
      * 
-     * @method updateYoutubeDatas
+     * @method updateDatas
      * @chainable
      */
-    updateYoutubeDatas() {
+    updateDatas() {
 
         var self = this;
 
-        this._getYoutubeDatasPromise()
+        this._getDatasPromise()
         .then(response => response.json())
         .then(data => {
 
             chrome.storage.sync.get(['videos'], (storedData) => {
-
-                var condition = true;
+        
+                var hasMainExpired = true;
+                var hasSecondExpired = true;
 
                 if (Object.keys(storedData).length > 0) {
+
+                    const localRecentDateMain = new Date(storedData.videos.main.date);
+                    const serverRecentDateMain = new Date(data.videos.datas.main.date);
+
+                    const localRecentDateSecond = new Date(storedData.videos.second.date);
+                    const serverRecentDateSecond = new Date(data.videos.datas.second.date);
+                        
+                    hasMainExpired = localRecentDateMain < serverRecentDateMain;
+                    hasSecondExpired = localRecentDateSecond < serverRecentDateSecond;
+                }
+
         
-                    const localRecentDate = new Date(storedData.videos[0].date);
-                    const serverRecentDate = new Date(data.items[0].snippet.publishedAt);
 
-                    condition = localRecentDate < serverRecentDate;
+                chrome.storage.sync.get(['settings'], (result) => {
 
-                    chrome.storage.sync.get(['settings'], (result) => {
+                    if (hasMainExpired && result.settings.notifications.youtube) {
 
-                        if (condition && result.settings.notifications.youtube) {
+                        self._notificationManager.notify(
+                            'youtube-main', 
+                            {
+                                type: "basic",
+                                title: data.videos.datas.main.title,
+                                message: 'Une nouvelle vidéo est sortie !',
+                                iconUrl: './images/huz_logo48.png'
+                            }
+                        );
 
-                            self._notificationManager.notify(
-                                'youtube', 
-                                {
-                                    type: "basic",
-                                    title: data.items[0].snippet.title,
-                                    message: 'Une nouvelle vidéo est sortie !',
-                                    iconUrl: './images/huz_logo48.png'
-                                }
-                            );
+                    }
 
-                        }
-                    });
+                    if (hasSecondExpired && result.settings.notifications.youtube) {
+
+                        self._notificationManager.notify(
+                            'youtube-second', 
+                            {
+                                type: "basic",
+                                title: data.videos.datas.second.title,
+                                message: 'Une nouvelle vidéo est sortie sur la chaine secondaire !',
+                                iconUrl: './images/huz_logo48.png'
+                            }
+                        );
+
+                    }
+                });
+            });
+
+            self._datas.videos = self._datas.videos || {};
+
+            self._datas.videos.main = {
+                id          : data.videos.datas.main.id,
+                title       : data.videos.datas.main.title,
+                description : data.videos.datas.main.description,
+                date        : data.videos.datas.main.date,
+                thumbnail   : data.videos.datas.main.thumbnail
+            };
+
+            self._datas.videos.second = {
+                id          : data.videos.datas.second.id,
+                title       : data.videos.datas.second.title,
+                description : data.videos.datas.second.description,
+                date        : data.videos.datas.second.date,
+                thumbnail   : data.videos.datas.second.thumbnail
+            };
+
+            chrome.storage.sync.set({ videos: self._datas.videos }, () => true); 
+
+            const prevData = self._datas.live 
+
+            if (data.stream.datas === null) {
+
+                self._datas.live = null;
+
+                chrome.browserAction.setIcon({
+                    path: {
+                        16: "images/huz_logo_gray16.png",
+                        32: "images/huz_logo_gray32.png",
+                        48: "images/huz_logo_gray48.png",
+                        128: "images/huz_logo_gray128.png"
+                    }
+                });
+
+                chrome.browserAction.setBadgeText({text:''});
+                chrome.browserAction.setTitle({title:'HuzLive - Offline'});
+            }
+            else {
+
+                chrome.browserAction.setIcon({
+                    path: {
+                        16: "images/huz_logo16.png",
+                        32: "images/huz_logo32.png",
+                        48: "images/huz_logo48.png",
+                        128: "images/huz_logo128.png"
+                    }
+                });
+
+                chrome.browserAction.setBadgeText({text:'Live'});
+                chrome.browserAction.setTitle({title:'HuzLive - Online'});
+
+                self._datas.live = {
+                    title : data.stream.datas.title,
+                    date  : data.stream.datas.date
                 }
+            }
 
-                if (condition) {
+            chrome.storage.sync.set({ live: self._datas.live }, () => {
 
-                    self._datas.videos = [];
+                chrome.storage.sync.get(['settings'], (result) => {
+
+                    if (prevData === null && 
+                        result.settings.notifications.twitch && 
+                        data.stream.datas !== null) {
+
+                        self._notificationManager.notify(
+                            'twitch', 
+                            {
+                                type: "basic",
+                                title: self._datas.live.title,
+                                message: 'On vient de lancer un stream, viens nous passer le bonjour !',
+                                iconUrl: './images/huz_logo48.png'
+                            }
+                        );
+                    }
+                });
             
-                    data.items.forEach(item => {
-
-                        self._datas.videos.push({
-                            id          : item.id.videoId,
-                            title       : item.snippet.title,
-                            description : item.snippet.description,
-                            date        : item.snippet.publishedAt,
-                            thumbnail   : item.snippet.thumbnails.default.url
-                        });
-                    });
-
-                    chrome.storage.sync.set({ videos: self._datas.videos }, () => true);         
-                }
             });
         })
-            .catch((e) => {
-                console.log(e);
-            });
-
-        return this;
-    }
-
-    
-    /**
-     * Met à jour les données provenant de Twitch
-     * 
-     * @method updateTwitchDatas
-     * @chainable
-     */
-    updateTwitchDatas() {
-
-        var self = this;
-        
-        this._getTwitchDatasPromise()
-            .then(response => response.json())
-            .then(data => {
-
-                const prevData = self._datas.live 
-
-                if (data.data.length === 0) {
-
-                    self._datas.live = null;
-
-                    chrome.browserAction.setIcon({
-                        path: {
-                            16: "images/huz_logo_gray16.png",
-                            32: "images/huz_logo_gray32.png",
-                            48: "images/huz_logo_gray48.png",
-                            128: "images/huz_logo_gray128.png"
-                        }
-                    });
-
-                    chrome.browserAction.setBadgeText({text:''});
-                    chrome.browserAction.setTitle({title:'HuzLive - Offline'});
-                }
-                else {
-
-                    chrome.browserAction.setIcon({
-                        path: {
-                            16: "images/huz_logo16.png",
-                            32: "images/huz_logo32.png",
-                            48: "images/huz_logo48.png",
-                            128: "images/huz_logo128.png"
-                        }
-                    });
-
-                    chrome.browserAction.setBadgeText({text:'Live'});
-                    chrome.browserAction.setTitle({title:'HuzLive - Online'});
-
-                    self._datas.live = {
-                        title : data.data[0].title,
-                        date  : data.data[0].started_at
-                    }
-                }
-
-                chrome.storage.sync.set({ live: self._datas.live }, () => {
-
-                    chrome.storage.sync.get(['settings'], (result) => {
-
-                        if (prevData === null && 
-                            result.settings.notifications.twitch && 
-                            data.data.length > 0) {
-
-                            self._notificationManager.notify(
-                                'twitch', 
-                                {
-                                    type: "basic",
-                                    title: self._datas.live.title,
-                                    message: 'On vient de lancer un stream, viens nous passer le bonjour !',
-                                    iconUrl: './images/huz_logo48.png'
-                                }
-                            );
-                        }
-                    });
-                
-                });
-            })
-            .catch((e) => {
-                console.log(e);
-            });
+        .catch((e) => {
+            console.log(e);
+        });
 
         return this;
     }
