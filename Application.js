@@ -116,7 +116,7 @@ export class Application {
                                 type: "basic",
                                 title: data.videos.datas.second.title,
                                 message: 'Une nouvelle vidéo est sortie sur la chaine secondaire !',
-                                iconUrl: './images/huz_logo48.png'
+                                iconUrl: './images/huz_second_logo48.png'
                             }
                         );
 
