@@ -2,6 +2,15 @@
 
 moment.locale('fr');
 
+function escapeHTML(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+}
+
 function render() {
 
     var notificationsToggleSwitch = document.querySelectorAll('.js-notifications__toggle-switch');
@@ -41,13 +50,13 @@ function render() {
                 var videosDescriptions = element.querySelector('.js-videos__description');
                 var videosMoment       = element.querySelector('.js-videos__moment');
 
-                videosThumbnail.src          = Sanitizer.escapeHTML(result.videos[keys[index]].thumbnail);
-                videosTitles.innerHTML       = Sanitizer.escapeHTML(result.videos[keys[index]].title);
-                videosDescriptions.innerHTML = Sanitizer.escapeHTML(result.videos[keys[index]].description);
-                videosMoment.innerHTML       = Sanitizer.escapeHTML(`Publiée ${moment(result.videos[keys[index]].date).fromNow()}`);
+                videosThumbnail.src            = escapeHTML(result.videos[keys[index]].thumbnail);
+                videosTitles.textContent       = escapeHTML(result.videos[keys[index]].title);
+                videosDescriptions.textContent = escapeHTML(result.videos[keys[index]].description);
+                videosMoment.textContent       = escapeHTML(`Publiée ${moment(result.videos[keys[index]].date).fromNow()}`);
 
                 videosLink.forEach((element) => {
-                    element.href = Sanitizer.escapeHTML(`https://www.youtube.com/watch?v=${result.videos[keys[index]].id}`);
+                    element.href = escapeHTML(`https://www.youtube.com/watch?v=${result.videos[keys[index]].id}`);
                 });
             });
         }
@@ -62,8 +71,8 @@ function render() {
         if (result.live !== null && result.live !== undefined) {
 
             header.classList.add('header--online')
-            headerTitle.innerHTML  = Sanitizer.escapeHTML(result.live.title);
-            headerMoment.innerHTML = Sanitizer.escapeHTML(moment(result.live.date).fromNow());
+            headerTitle.textContent  = escapeHTML(result.live.title);
+            headerMoment.textContent = escapeHTML(moment(result.live.date).fromNow());
         }
     });
 
