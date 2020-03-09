@@ -17,7 +17,7 @@ export class Application {
       this._datas = {
           videos: null,
           live: null
-      }
+      };
 
       /**
        * Correspond aux options de l'extensions
@@ -31,7 +31,7 @@ export class Application {
               youtube: false,
               twitch: false
           }
-      }
+      };
 
 
       /**
@@ -55,7 +55,7 @@ export class Application {
     _getDatasPromise() {
         
         return fetch(
-            'https://api.hectorlachambre.pro/huzlive'
+            'https://huzlive.hectorlachambre.pro/datas'
         )
     }
 
@@ -101,8 +101,8 @@ export class Application {
                             {
                                 type: "basic",
                                 title: data.videos.datas.main.title,
-                                message: 'Une nouvelle vidéo est sortie !',
-                                iconUrl: './images/huz_logo48.png'
+                                message: 'Une nouvelle vidéo est disponible sur la chaîne principale !',
+                                iconUrl: './images/tim_logo48.png'
                             }
                         );
 
@@ -115,8 +115,8 @@ export class Application {
                             {
                                 type: "basic",
                                 title: data.videos.datas.second.title,
-                                message: 'Une nouvelle vidéo est sortie sur la chaine secondaire !',
-                                iconUrl: './images/huz_second_logo48.png'
+                                message: 'Une nouvelle vidéo est disponible sur la chaîne secondaire !',
+                                iconUrl: './images/tim_second_logo48.png'
                             }
                         );
 
@@ -152,29 +152,29 @@ export class Application {
 
                 chrome.browserAction.setIcon({
                     path: {
-                        16: "images/huz_logo_gray16.png",
-                        32: "images/huz_logo_gray32.png",
-                        48: "images/huz_logo_gray48.png",
-                        128: "images/huz_logo_gray128.png"
+                        16: "images/tim_logo_gray16.png",
+                        32: "images/tim_logo_gray32.png",
+                        48: "images/tim_logo_gray48.png",
+                        128: "images/tim_logo_gray128.png"
                     }
                 });
 
                 chrome.browserAction.setBadgeText({text:''});
-                chrome.browserAction.setTitle({title:'HuzLive - Offline'});
+                chrome.browserAction.setTitle({title:'Timtoobias - Offline'});
             }
             else {
 
                 chrome.browserAction.setIcon({
                     path: {
-                        16: "images/huz_logo16.png",
-                        32: "images/huz_logo32.png",
-                        48: "images/huz_logo48.png",
-                        128: "images/huz_logo128.png"
+                        16: "images/tim_logo16.png",
+                        32: "images/tim_logo32.png",
+                        48: "images/tim_logo48.png",
+                        128: "images/tim_logo128.png"
                     }
                 });
 
                 chrome.browserAction.setBadgeText({text:'Live'});
-                chrome.browserAction.setTitle({title:'HuzLive - Online'});
+                chrome.browserAction.setTitle({title:'Timtoobias - Online'});
 
                 self._datas.live = {
                     title : data.stream.datas.title,
@@ -196,7 +196,7 @@ export class Application {
                                 type: "basic",
                                 title: self._datas.live.title,
                                 message: 'On vient de lancer un stream, viens nous passer le bonjour !',
-                                iconUrl: './images/huz_logo48.png'
+                                iconUrl: './images/tim_logo48.png'
                             }
                         );
                     }

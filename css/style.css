@@ -1,12 +1,17 @@
+
 /* Components */
 
 @import './components/header.css';
 @import './components/loader.css';
 @import './components/notifications.css';
-@import './components/separator.css';
 @import './components/videos.css';
+@import './components/donate.css';
 
 /* End */
+:root {
+    --primary: #1b9a66;
+    --primary-light: #78c3a4;
+}
 
 * {
     font-family: 'Lato', sans-serif;

@@ -1,11 +1,11 @@
 /* == Notifications Component == */
 
 .notifications {
-    --active-color: #2cbd81;
+    --active-color: var(--primary-light);
+    --active-dark-color: var(--primary);
     --no-active-color: #aaaaaa;
     display: flex;
-    padding: 10px 15px;
-    background-color: #fafafa;
+    padding: 8px 16px;
 }
 
 .notifications__category-title {
@@ -13,11 +13,11 @@
     align-items: center;
     font-size: 16px;
     line-height: 24px;
-    margin-right: 15px;
+    margin-right: 16px;
 }
 
 .notifications__item:not(:last-child) {
-    margin-right: 15px;
+    margin-right: 16px;
 }
 
 .notifications__item {
@@ -28,7 +28,8 @@
 
 .notifications__label {
     font-size: 14px;
-    line-height: 21px;
+    line-height: 24px;
+    font-weight: 700;
 }
 
 .notifications__toggle-switch {
@@ -39,34 +40,35 @@
     cursor: pointer;
     display: block;
     border: none;
-    border-radius: 11px;
+    border-radius: 10px;
     background-color: var(--no-active-color);
-    width: 40px;
-    height: 20px;
+    width: 36px;
+    height: 14px;
     position: relative;
-    margin: 1px;
+    margin: 5px;
     transition: all 0.2s;
 }
 
 .notifications__toggle-switch+label:after {
     content: '';
     background-color: #FFF;
-    border: 1px solid var(--no-active-color);
-    border-radius: 10px;
+    border-radius: 50%;
     width: 20px;
     height: 20px;
     position: absolute;
-    top: -1px;
+    top: -3.5px;
     left: 0;
     transition: all 0.2s;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),
+        0 1px 1px 0 rgba(0,0,0,.14),
+        0 1px 3px 0 rgba(0,0,0,.12);
 }
 
 .notifications__toggle-switch:checked+label {
     background-color: var(--active-color);
-    border-color: var(--active-color);
 }
 
 .notifications__toggle-switch:checked+label:after {
-    left: 20px;
-    border-color: var(--active-color);
+    left: 16px;
+    background-color: var(--active-dark-color);
 }
